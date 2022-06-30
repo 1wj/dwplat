@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.digiwin.sampleapp1.frtest.dao.DataInstanceDao">
+    <!--增加实例信息-->
+    <insert id="add">
+    insert into frc_data_instance(
+        oid,
+        tenantsid,
+        question_trace_oid,
+        data_content,
+        create_date,
+        create_name,
+        update_date,
+        update_name
+    )values(
+        #{oid},
+        #{tenantsid},
+        #{questionTraceOid},
+        #{dataContent},
+        NOW(),
+        #{createName},
+        NOW(),
+        #{updateName}
+    )
+</insert>
+
+    <!--查询实例信息-->
+    <select id="selectByTraceOid" resultType="String">
+        select data_content
+        from  frc_data_instance
+        where question_trace_oid=#{questionActionTraceOid}
+    </select>
+
+    <select id="selectDataInfo" resultType="String">
+        select da.data_content
+        from  frc_data_instance  da,frc_question_action_trace tr
+        where  da.question_trace_oid=tr.oid and  question_no=#{questionNo}
+        ORDER BY tr.create_date DESC
+        limit 0,1
+    </select>
+</mapper>

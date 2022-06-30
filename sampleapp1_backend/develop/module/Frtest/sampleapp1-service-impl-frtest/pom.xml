@@ -1,0 +1,60 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.digiwin.sampleapp1</groupId>
+		<artifactId>Frtest</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	
+	<artifactId>sampleapp1-service-impl-frtest</artifactId>
+	<packaging>jar</packaging>
+	
+	<name>sampleapp1-service-impl-frtest</name>
+	<url>http://maven.apache.org</url>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<module.basedir>${project.parent.basedir}</module.basedir>
+		<module.name>Frtest</module.name>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.digiwin.sampleapp1</groupId>
+			<artifactId>sampleapp1-service-interface-frtest</artifactId>			
+		</dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+	<build>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<plugins>			
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>genernate-module-impl</id>
+						<phase>package</phase>
+						<configuration>
+							<tasks>								
+								<copy todir="E:\dwapiplatform-appbackend-dev-4.0.0.1001\sampleapp1_backend\running\app_backend\application\module/${module.name}">
+									<fileset dir="${basedir}/target">
+										<include name="*.jar"/>
+									</fileset>
+								</copy>														
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>			
+		</plugins>
+	</build>
+</project>

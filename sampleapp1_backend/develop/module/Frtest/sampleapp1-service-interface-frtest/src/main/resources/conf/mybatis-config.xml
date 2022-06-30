@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+<!--    &lt;!&ndash;指定properties文件的位置也叫引入外部配置文件， (target/class里面的)从类路径根开始找文件&ndash;&gt;-->
+<!--    <properties resource="module.properties"/>-->
+<!--    &lt;!&ndash;控制mybatis全局行为&ndash;&gt;-->
+
+<!--    <settings>-->
+<!--        &lt;!&ndash;设置mybatis输出日志&ndash;&gt;-->
+<!--        <setting name="logImpl" value="STDOUT_LOGGING"/>-->
+<!--    </settings>-->
+    <!--开启自动驼峰命名规则-->
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <!--定义别名-->
+    <typeAliases>
+        <package name="com.digiwin.sampleapp1.frtest.domain"/>
+    </typeAliases>
+
+    <mappers>
+        <package name ="com.digiwin.sampleapp1.frtest.dao"/>
+    </mappers>
+</configuration>

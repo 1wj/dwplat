@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.digiwin.sampleapp1.frtest.dao.AttachmentsDao">
+
+
+    <!--增加附件-->
+    <insert id="add">
+        insert into frc_attachments(
+            oid,
+            tenantsid,
+            data_instance_oid,
+            question_no,
+            attachment_title,
+            extension_name,
+            attachment_description,
+            attachment_type,
+            dmc_id
+        )values(
+            #{oid},
+            #{tenantsid},
+            #{dataInstanceOid},
+            #{questionNo},
+            #{attachmentTitle},
+            #{extensionName},
+            #{attachmentDescription},
+            #{attachmentType},
+            #{dmcId}
+        )
+    </insert>
+
+
+
+</mapper>

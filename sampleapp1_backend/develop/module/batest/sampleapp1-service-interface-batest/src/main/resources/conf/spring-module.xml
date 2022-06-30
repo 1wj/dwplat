@@ -1,0 +1,49 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd  http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd  http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd  http://www.springframework.org/schema/aop     http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+	<context:property-placeholder location="classpath:conf/module.properties" />
+
+
+	<!-- spring context -->
+	<context:annotation-config/>
+
+	<!-- spring context -->
+	<context:component-scan base-package="com.digiwin.sampleapp1.batest.service.impl"/>
+	
+	<!-- config utils -->	
+	<bean class="com.digiwin.app.module.DWModuleConfigUtils" id="DWModuleConfigUtils"/>
+
+	<!-- service input out aop -->	
+	<bean class="com.digiwin.app.container.ServicePublicMethodLogInterceptor" id="serviceInputOutputInterceptor"/> 
+
+    <aop:config proxy-target-class="true">                                          
+        <aop:pointcut expression="execution(* com.digiwin.sampleapp1.batest.service.impl..*.*(..))" id="logInputOutPointCut"/>
+        <aop:advisor advice-ref="serviceInputOutputInterceptor" pointcut-ref="logInputOutPointCut"/>
+    </aop:config>
+
+
+
+	<!--声明数据源，连接数据库-->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		  init-method="init" destroy-method="close">
+		<property name="url" value="jdbc:mariadb://localhost:3307/test" />
+		<property name="username" value="root" />
+		<property name="password" value="123asd." />
+	</bean>
+
+	<!--SqlSessionFactoryBean创建SqlSessionFactory-->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation"  value="classpath:conf/mybatis-config.xml" />
+	</bean>
+
+	<!--声明mybatis的扫描器，创建dao对象-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+		<property name="basePackage" value="com.digiwin.sampleapp1.batest.dao" />
+	</bean>
+
+	<!--声明service的注解@Service所在的包名位置-->
+<!--	<context:component-scan base-package="com.iweb.service" />-->
+
+</beans>

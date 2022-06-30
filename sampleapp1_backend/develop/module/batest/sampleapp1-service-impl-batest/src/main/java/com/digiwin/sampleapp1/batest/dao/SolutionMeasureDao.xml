@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.digiwin.sampleapp1.batest.dao.SolutionMeasureDao">
+
+    <!-- 根据解决方案id查询解决方案步骤-->
+    <select id="selectStepListByEditId" resultType="SolutionStepInfo">
+        select
+            solution_step_id as solutionStepId,
+            tenantsid  ,
+            solution_key_id as solutionKeyId,
+            step_id as stepId,
+            step_name as stepName,
+            process_person_id as processPersonId,
+            process_person_name as processPersonName,
+            expect_complete_days as expectCompleteDays,
+            create_time as createTime,
+            create_name as createName,
+            update_time as updateTime,
+            update_name as updateName
+        from frc_solution_measure
+        where solution_key_id=#{uuid1}
+    </select>
+
+    <!-- 增加一个-->
+    <insert id="addStepOne">
+        insert into frc_solution_measure(
+                solution_step_id,
+                tenantsid,
+                solution_key_id,
+                step_id,
+                step_name,
+                process_person_id,
+                process_person_name,
+                expect_complete_days,
+                create_time,
+                create_name,
+                update_time,
+                update_name
+        )  values(
+                #{solutionStepId},
+                #{tenantsid},
+                #{solutionKeyId},
+                #{stepId},
+                #{stepName},
+                #{processPersonId},
+                #{processPersonName},
+                #{expectCompleteDays},
+        NOW(),
+                #{createName},
+        NOW(),
+                #{updateName}
+        )
+    </insert>
+
+    <!--根据id查询-->
+    <select id="selectStepById" resultType="SolutionStepInfo">
+        select
+            solution_step_id as solutionStepId,
+            tenantsid  ,
+            solution_key_id as solutionKeyId,
+            step_id as stepId,
+            step_name as stepName,
+            process_person_id as processPersonId,
+            process_person_name as processPersonName,
+            expect_complete_days as expectCompleteDays,
+            create_time as createTime,
+            create_name as createName,
+            update_time as updateTime,
+            update_name as updateName
+        from frc_solution_measure
+        where solution_step_id=#{uuid}
+    </select>
+
+    <select id="selectMaxStepId" resultType="Vo">
+        SELECT
+                solution_key_id as solutionStepId,
+                max(step_id) as maxId
+        FROM    frc_solution_measure
+        GROUP BY solution_key_id
+    </select>
+
+
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.digiwin.sampleapp1.frtest.dao.QuestionActionTraceDao">
+
+    <!--添加-->
+    <insert id="add">
+        insert into frc_question_action_trace(
+            oid,tenantsid,question_record_oid,question_process_step,
+            question_solve_step, question_no, question_description,question_process_status,
+            question_process_result, handle_comment, return_flag_id,return_flag_name,
+            data_instance_oid,start_time,expect_complete_date,actual_complete_date,
+            principal_step,liable_person_id,liable_person_name, liable_person_position_id,
+            liable_person_position_name,create_date,create_name, update_date,
+            update_name, RES01,RES02, RES03,
+            RES04, RES05,return_no,return_id,
+            return_name, create_id,  close_reason,return_step_no
+        ) values(
+            #{oid},#{tenantsid}, #{questionRecordOid},#{questionProcessStep},
+            #{questionSolveStep},#{questionNo},#{questionDescription}, #{questionProcessStatus},
+            #{questionProcessResult}, #{handleComment}, #{returnFlagId},#{returnFlagName},
+            #{dataInstanceOid},NOW(), date_format(#{expectCompleteDate},'%Y-%m-%d'), NOW(),
+            #{principalStep},#{liablePersonId},#{liablePersonName},  #{liablePersonPositionId},
+            #{liablePersonPositionName},  NOW(), #{createName},NOW(),
+            #{updateName}, #{RES01}, #{RES02}, #{RES03},
+            #{RES04}, #{RES05}, #{returnNo},#{returnId},
+            #{returnName},#{createId}, #{closeReason}, #{returnStepNo}
+        )
+    </insert>
+
+     <!--查询返回信息-->
+    <select id="selectReturnInfo" resultType="Map">
+        select
+            question_no,
+            question_description,
+            liable_person_id,
+            liable_person_name,
+            return_flag_id,
+            return_flag_name,
+            date_format(expect_complete_date,'%Y-%m-%d') as expect_complete_date
+        from frc_question_action_trace
+        where oid=#{oid}
+    </select>
+
+</mapper>

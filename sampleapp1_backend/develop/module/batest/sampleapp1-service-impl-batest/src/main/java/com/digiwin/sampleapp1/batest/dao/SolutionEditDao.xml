@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.digiwin.sampleapp1.batest.dao.SolutionEditDao">
+
+
+<!--    根据id查询-->
+    <select id="selectEditById" resultType="SolutionInfo">
+        select
+            solution_key_id as solutionKeyId,
+            tenantsid,
+            solution_id as solutionId,
+            solution_name as solutionName,
+            manage_status as manageStatus,
+            is_default as isDefault,
+            liable_person_id as liablePersonId,
+            liable_person_name as liablePersonName,
+            create_time as createTime,
+            create_name as createName,
+            update_time as updateTime,
+            update_name as updateName
+
+        from frc_solution_edit
+        where solution_key_id=#{uuid}
+    </select>
+
+<!--    增加一个-->
+    <insert id="addEditOne">
+        insert into frc_solution_edit(
+                solution_key_id,
+                tenantsid,
+                solution_id,
+                solution_name,
+                manage_status,
+                is_default,
+                liable_person_id,
+                liable_person_name,
+                create_time,
+                create_name,
+                update_time,
+                update_name
+        )  values(
+                #{solutionKeyId},
+                #{tenantsid},
+                #{solutionId},
+                #{solutionName},
+                #{manageStatus},
+                #{isDefault},
+                #{liablePersonId},
+                #{liablePersonName},
+        NOW(),
+                #{createName},
+        NOW(),
+                #{updateName}
+        )
+    </insert>
+
+    <select id="selectMaxSolutionId" resultType="String">
+        SELECT max(solution_id) FROM frc_solution_edit
+    </select>
+
+
+
+</mapper>
